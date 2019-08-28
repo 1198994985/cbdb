@@ -31,7 +31,8 @@ export default class Home extends React.Component {
           <Content style={{backgroundColor: '#fff'}}>
           <Header />
           <Switch>
-            <Route path='/home' component={Logo}/> 
+          <Route path='/home' component={Logo}/> 
+          <Route path='/home' component={Logo}/> 
 
           </Switch>
           

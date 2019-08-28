@@ -1,17 +1,11 @@
 import React, {Component} from 'react';
 
 // 柱状图
-export default class Bar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {  }
-  }
-  render() { 
+
+export default function Bar() {
+
     return ( 
-      <div>
-        Bar
-      </div>
+      <div>Bar </div>
      );
-  }
 }
  

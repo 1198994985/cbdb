@@ -82,11 +82,11 @@ function LeftNav(props) {
   const onCollapse = collpd => {
     setCollapsed(collpd);
     console.log('onCollapse')
-    // if(collapsed === false) {
+    // if(collapsed === true) {
     //   setTimeout(() => (setOnButton(!onbutton)),150)
     //   console.log('展开')
     // } else {
-    //    setOnButton(!onbutton))
+    //    setOnButton(!onbutton)
     // }
   };
     return (
