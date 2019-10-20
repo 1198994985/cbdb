@@ -1,0 +1,54 @@
+
+.info-div1 { /*信息卡块属性*/
+
+    /*position: relative;*/
+    /*vertical-align:top;*/
+    /*float: left;*/
+    width: 100%;
+    /*height:30%;*/
+    margin: 0px;
+}
+.select-div {
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    /*box-shadow: 0 0 5px #ccc;*/
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.select-style {
+    /*border: none;*/ /*清除select的边框样式*/
+    /*outline: none; */ /*清除select聚焦时候的边框颜色*/
+    width: 35%; /*将select的宽高等于div的宽高*/
+    height: 30px;
+    line-height: 40px;
+    /*appearance:none; *//*隐藏select的下拉图标*/
+    /*-webkit-appearance: none;
+    -moz-appearance: none;*/
+    margin-left: 5px;
+}
+
+.button-style {
+    width: 20%;
+    height: 30px;
+    margin-left: 5px;
+    text-decoration: none;
+    background: #e8e8e8; /*按钮背景色*/
+    color: #464646;
+    font-size: 12px;
+    border: 0;
+    outline: none;
+    -webkit-transition: all linear 0.30s;
+    -moz-transition: all linear 0.30s;
+    transition: all linear 0.30s;
+}
+
+.table-post-div { /*表格属性*/
+    float: left;
+    height: 350px;
+    overflow-y: auto; /*超出自动显示*/
+    
+    border-right-width: 2px;
+}
+.table-div{height:320px;overflow-y:auto}

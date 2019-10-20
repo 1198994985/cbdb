@@ -1,5 +1,5 @@
 
-import React, { Component, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import logo from './min_logo.png'
 import { Layout, Menu, Icon } from 'antd';
 import './index.less'
