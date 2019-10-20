@@ -1,6 +1,6 @@
-import React,{Component} from 'react'
+import React, { Component } from 'react'
 import './OfficersJobInformation.css'
-import {Card, Radio} from 'antd'
+import { Card, Radio } from 'antd'
 import '../card.less'
 
 import { Table, Divider, Tag } from 'antd';
@@ -11,21 +11,21 @@ const data = [
 
     },
     {
- 
+
     },
     {
- 
+
     },
     {
- 
+
     },
     {
- 
+
     },
-  ];
+];
 
 
-export default class OfficersJobInformation extends Component{
+export default class OfficersJobInformation extends Component {
 
     // handleClick2 = (e) => {
     //     let index = e.target.value
@@ -152,14 +152,14 @@ export default class OfficersJobInformation extends Component{
     //         console.log("handleClick2:error")
     //     }
     // }
-    render(){
+    render() {
         return (
             <div className="info-div1">
-                <Card title="官员任职信息表" style={{height: '400px'}}>
+                <Card title="官员任职信息表" style={{ height: '400px' }}>
                     <div>
                         <div>
-                            <Radio.Group defaultValue="a" buttonStyle="solid" style={{margin: "8px"}}
-                                         onChange={this.handleClick2}>
+                            <Radio.Group defaultValue="a" buttonStyle="solid" style={{ margin: "8px" }}
+                                onChange={this.handleClick2}>
                                 <Radio.Button value="a">任职信息</Radio.Button>
                                 <Radio.Button value="b">同年信息</Radio.Button>
                             </Radio.Group>
@@ -178,17 +178,17 @@ export default class OfficersJobInformation extends Component{
                             </tr>
                             </thead>
                         </table> */}
-                        
+
                         <Table dataSource={data}>
 
 
-    <Column title="序号" dataIndex="age1" key="age1" />
-    <Column title="上任时间" dataIndex="address2" key="address2" />
-    <Column title="调任时间" dataIndex="address3" key="address3" />
-    <Column title="官职名" dataIndex="address4" key="address4" />
-    <Column title="任官地点" dataIndex="address5" key="address5" />
-   
-  </Table>
+                            <Column title="序号" dataIndex="age1" key="age1" />
+                            <Column title="上任时间" dataIndex="address2" key="address2" />
+                            <Column title="调任时间" dataIndex="address3" key="address3" />
+                            <Column title="官职名" dataIndex="address4" key="address4" />
+                            <Column title="任官地点" dataIndex="address5" key="address5" />
+
+                        </Table>
                     </div>
                 </Card>
             </div>

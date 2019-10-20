@@ -1,18 +1,20 @@
 
-import React, {Component, lazy, Suspense} from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 import Line from '../../component/charts/line'
 import Map from '../../component/charts/map'
 import FiveDynastiesAppointedSituations from '../../component/FDAS/FiveDynastiesAppointedSituations'
 import OfficersJobInformation from '../../component/OJI/OfficersJobInformation'
-import {reqHeatMapTang,
+import {
+  reqHeatMapTang,
   reqHeatMapSong,
   reqHeatMapYuan,
   reqHeatMapMing,
-  reqHeatMapQing } from '../../request/ajax'
+  reqHeatMapQing
+} from '../../request/ajax'
 
 // const Map = lazy( () => import('../../component/charts/map') )
 
-  // 一切烂代码都不是fb写的，fb最强
+// 一切烂代码都不是fb写的，fb最强
 let convertData = (nb) => {
   let res = []
   let dataObject = nb
@@ -34,11 +36,11 @@ let convertData = (nb) => {
  */
 export default class Charts extends Component {
   constructor(props) {
-  
+
     super(props)
-    
+
     this.state = {
-    
+
       tang: {},
       song: {},
       yuan: {},
@@ -55,7 +57,7 @@ export default class Charts extends Component {
       // isChanged: false
     }
   }
-  
+
   setCurrentClick = (name) => {
     // name 鼠标点击的省份
 
@@ -63,54 +65,56 @@ export default class Charts extends Component {
     console.log(name)
     this.setState({ currentClick: name })
   }
-  
-
-// handleSetState = (tempState)=>{
-//   let {mpName,mPerson,isInput,isLoaded,isradio,maxRelationValue,relationValue,isChanged}=tempState
-//   this.setState({
-//     mpName: mpName,
-//     mPerson: mPerson,
-//     isInput: isInput,
-//     isLoaded: isLoaded,
-//     isradio: isradio,
-//     maxRelationValue: maxRelationValue,
-//     relationValue: relationValue,
-//     isChanged: isChanged
-//   })
-// }
 
 
-componentDidMount() {
+  // handleSetState = (tempState)=>{
+  //   let {mpName,mPerson,isInput,isLoaded,isradio,maxRelationValue,relationValue,isChanged}=tempState
+  //   this.setState({
+  //     mpName: mpName,
+  //     mPerson: mPerson,
+  //     isInput: isInput,
+  //     isLoaded: isLoaded,
+  //     isradio: isradio,
+  //     maxRelationValue: maxRelationValue,
+  //     relationValue: relationValue,
+  //     isChanged: isChanged
+  //   })
+  // }
 
-  Promise.all([reqHeatMapTang(), reqHeatMapSong(), reqHeatMapYuan(), reqHeatMapMing(), reqHeatMapQing()])
-  .then( ( result ) => {
-    let mapName = ['tang', 'song', 'yuan', 'ming', 'qing']
-    result.map((item, index) => {
-      console.log('map')
-      this.setState({ [mapName[index]] : convertData(item)})
-      
-    } )
-  })
-  
 
-}
+  componentDidMount() {
+
+    // TODO: 缓存优化，IndexedDB，然后读取并注册热力地图，减少服务器请求
+
+    // 这里写的有一点问题
+    Promise.all([reqHeatMapTang(), reqHeatMapSong(), reqHeatMapYuan(), reqHeatMapMing(), reqHeatMapQing()])
+      .then((result) => {
+        let mapName = ['tang', 'song', 'yuan', 'ming', 'qing']
+        result.map((item, index) => {
+          console.log('map')
+          this.setState({ [mapName[index]]: convertData(item) })
+        })
+      })
+
+
+  }
 
   render() {
     return (
       <React.Fragment>
-        <div style = {{float:'left', overflow:'hidden',width:'50% '}}>  
-        <Line />
-        {/* <Suspense fallback={'loading'} > */}
-          <Map setCurrent={this.setCurrentClick}/>
-        {/* </Suspense> */}
+        <div style={{ float: 'left', overflow: 'hidden', width: '50% ' }}>
+          <Line />
+          {/* <Suspense fallback={'loading'} > */}
+          <Map setCurrent={this.setCurrentClick} />
+          {/* </Suspense> */}
         </div>
-        <div style = {{float:'left',width:'50%'}}>  
-        <FiveDynastiesAppointedSituations tempState={this.state} handleSetState={this.handleSetState} />
-          <OfficersJobInformation mpName={this.state.mpName}/>
+        <div style={{ float: 'left', width: '50%' }}>
+          <FiveDynastiesAppointedSituations tempState={this.state} handleSetState={this.handleSetState} />
+          <OfficersJobInformation mpName={this.state.mpName} />
         </div>
-        <div style={{clear:'both'}}> </div>
+        <div style={{ clear: 'both' }}> </div>
       </React.Fragment>
-      
+
     )
   }
 }

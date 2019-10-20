@@ -1,8 +1,8 @@
 let mapData1 = [],
-    mapData2 = [],
-    mapData3 = [],
-    mapData4 = [],
-    mapData5 = [];
+  mapData2 = [],
+  mapData3 = [],
+  mapData4 = [],
+  mapData5 = [];
 let theMap = {
   baseOption: {
     timeline: {
@@ -18,8 +18,8 @@ let theMap = {
 
   options: [
     {
-      title: {text: '唐代（714年）地图'},
-      
+      title: { text: '唐代（714年）地图' },
+
       geo: {
         map: 'tang',
         label: {
@@ -28,8 +28,8 @@ let theMap = {
             color: '#666666',   //文字颜色
             fontFamily: 'monospace'
           },
-          regions:{
-            itemStyle:{
+          regions: {
+            itemStyle: {
               color: {
                 type: 'linear',
                 x: 0,
@@ -37,17 +37,17 @@ let theMap = {
                 x2: 0,
                 y2: 1,
                 colorStops: [{
-                    offset: 0, color: 'red' // 0% 处的颜色
+                  offset: 0, color: 'red' // 0% 处的颜色
                 }, {
-                    offset: 1, color: 'blue' // 100% 处的颜色
+                  offset: 1, color: 'blue' // 100% 处的颜色
                 }],
                 global: false // 缺省为 false
-            }
+              }
             }
           }
-        
+
         },
-      
+
         center: [113.97, 36],
         itemStyle: {
           normal: {
@@ -58,7 +58,7 @@ let theMap = {
             areaColor: '#cbcbcb',
           }
         },
-        
+
       },
       visualMap: { //用于开启自定义的视觉颜色条框
         show: true,
@@ -69,7 +69,7 @@ let theMap = {
           color: ['blue', 'blue', 'green', 'yellow', 'red']
         },
         top: 20,
-      
+
       },
       series: [{
         name: "官员分布密度",
@@ -83,15 +83,15 @@ let theMap = {
             color: '#ddb926'
           }
         },
-        minOpacity:0,               //最小的透明度，在地理坐标系(coordinateSystem: 'geo')上有效。
-        maxOpacity:0.8, 
-      
+        minOpacity: 0,               //最小的透明度，在地理坐标系(coordinateSystem: 'geo')上有效。
+        maxOpacity: 0.8,
+
       }]
 
     },
 
     {
-      title: {text: '宋朝（993年）地图'},
+      title: { text: '宋朝（993年）地图' },
       geo: {
         map: 'song',
         label: {
@@ -135,15 +135,15 @@ let theMap = {
             color: '#ddb926'
           }
         },
-        minOpacity:0,               //最小的透明度，在地理坐标系(coordinateSystem: 'geo')上有效。
-        maxOpacity:0.8,
-        z:0
+        minOpacity: 0,               //最小的透明度，在地理坐标系(coordinateSystem: 'geo')上有效。
+        maxOpacity: 0.8,
+        z: 0
       }]
     },
 
     {
 
-      title: {text: '元朝顺元年（1330年）地图'},
+      title: { text: '元朝顺元年（1330年）地图' },
       geo: {
         map: 'yuan',
         label: {
@@ -192,7 +192,7 @@ let theMap = {
 
     {
 
-      title: {text: '明朝（1402-1424年）地图'},
+      title: { text: '明朝（1402-1424年）地图' },
       geo: {
         map: 'ming',
         label: {
@@ -241,7 +241,7 @@ let theMap = {
     },
 
     {
-      title: {text: '清朝（1820年）地图'},
+      title: { text: '清朝（1820年）地图' },
       geo: {
         map: 'qing',
         label: {
