@@ -29,51 +29,63 @@ let convertData = (nb) => {
   return res
 }
 
-
+/**
+ * @class 主页面+路由
+ */
 export default class Charts extends Component {
-constructor(props) {
-  super(props)
-  this.state = {
-    tang:{},
-    song:{},
-    yuan:{},
-    ming:{},
-    qing:{},
-    mpName: " ",
-    mPerson: {},
-    isInput: false,
-    isLoaded: false,
-    isradio: 1,
-    maxRelationValue: 6,
-    relationValue: 5,
-    isChanged: false
+  constructor(props) {
+  
+    super(props)
+    
+    this.state = {
+    
+      tang: {},
+      song: {},
+      yuan: {},
+      ming: {},
+      qing: {},
+      currentClick: ''
+      // mpName: " ", // 没有必要使用这么多状态
+      // mPerson: {},
+      // isInput: false,
+      // isLoaded: false,
+      // isradio: 1,
+      // maxRelationValue: 6,
+      // relationValue: 5,
+      // isChanged: false
+    }
   }
-}
+  
+  setCurrentClick = (name) => {
+    // name 鼠标点击的省份
 
+    // 输出点击的地名
+    console.log(name)
+    this.setState({ currentClick: name })
+  }
+  
 
-handleSetState = (tempState)=>{
-  let {mpName,mPerson,isInput,isLoaded,isradio,maxRelationValue,relationValue,isChanged}=tempState
-  this.setState({
-    mpName: mpName,
-    mPerson: mPerson,
-    isInput: isInput,
-    isLoaded: isLoaded,
-    isradio: isradio,
-    maxRelationValue: maxRelationValue,
-    relationValue: relationValue,
-    isChanged: isChanged
-  })
-}
+// handleSetState = (tempState)=>{
+//   let {mpName,mPerson,isInput,isLoaded,isradio,maxRelationValue,relationValue,isChanged}=tempState
+//   this.setState({
+//     mpName: mpName,
+//     mPerson: mPerson,
+//     isInput: isInput,
+//     isLoaded: isLoaded,
+//     isradio: isradio,
+//     maxRelationValue: maxRelationValue,
+//     relationValue: relationValue,
+//     isChanged: isChanged
+//   })
+// }
 
 
 componentDidMount() {
-  console.log('lalal')
-
 
   Promise.all([reqHeatMapTang(), reqHeatMapSong(), reqHeatMapYuan(), reqHeatMapMing(), reqHeatMapQing()])
   .then( ( result ) => {
     let mapName = ['tang', 'song', 'yuan', 'ming', 'qing']
-    result.map( (item, index) => {
+    result.map((item, index) => {
       console.log('map')
       this.setState({ [mapName[index]] : convertData(item)})
       
@@ -89,7 +101,7 @@ componentDidMount() {
         <div style = {{float:'left', overflow:'hidden',width:'50% '}}>  
         <Line />
         {/* <Suspense fallback={'loading'} > */}
-        <Map />
+          <Map setCurrent={this.setCurrentClick}/>
         {/* </Suspense> */}
         </div>
         <div style = {{float:'left',width:'50%'}}>  

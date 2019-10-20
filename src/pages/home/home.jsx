@@ -16,7 +16,9 @@ import {reqMapTang,
 
 const {  Content, Footer } = Layout;
 
-
+/**
+ * @class 主页面+路由
+ */
 export default class Home extends React.Component {
 
   state = {

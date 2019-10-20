@@ -27,7 +27,7 @@ const data = [
 ];
 /**
  * 获取省份对应的ajax请求地址
- * @param {string} str2 
+ * @param {string} name 待查询省份
  * @return {string} 返回地址
  */
 const getAddressName = (name) => {
