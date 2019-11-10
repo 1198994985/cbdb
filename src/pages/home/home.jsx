@@ -1,6 +1,6 @@
 import React from 'react'
 import './home.less'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch,Redirect } from 'react-router-dom'
 import { Layout } from 'antd';
 import LeftNav from '../../component/left-Nav/leftNav'
 import Logo from '../logo/logo'
@@ -35,7 +35,6 @@ export default class Home extends React.Component {
   componentDidMount() {
 
     // TODO: 缓存优化，IndexedDB，然后读取并注册地图，减少服务器请求
-
     Promise.all([reqMapTang(), reqMapSong(), reqMapYuan(), reqMapMing(), reqMapQing()])
       .then((result) => {
         let mapName = ['tang', 'song', 'yuan', 'ming', 'qing']

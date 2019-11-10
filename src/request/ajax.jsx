@@ -1,13 +1,14 @@
 import axios from 'axios'
 import { message } from 'antd'
 
-const base = "http://47.97.217.209:8080/CBDB"
+const base = ""
 function request(url, data = {}, type = 'GET') {
 
   return new Promise((resolve, reject) => {
     let promise
     // 1. 执行异步ajax请求
     if (type === 'GET') { // 发GET请求
+      console.log('GET:',url)
       promise = axios.get(url, { // 配置对象
         params: data // 指定请求参数
       })
@@ -42,4 +43,4 @@ export const reqMapMing = () => request('Ming.geojson', {}, 'GET')
 export const reqMapQing = () => request('Qing.geojson', {}, 'GET')
 
 // 请求地图省份对应的任务信息
-export const reqAddressName = (address) => request(address, {}, 'GET')
+export const reqAddressName = (address) => request(base + address, {}, 'GET') // /address?addressName_XXX=

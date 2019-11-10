@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './OfficersJobInformation.css'
+import './officialJobForm.css'
 import { Card, Radio } from 'antd'
 import '../card.less'
 
@@ -25,7 +25,7 @@ const data = [
 ];
 
 
-export default class OfficersJobInformation extends Component {
+export default class OfficialJobForm extends Component {
 
     // handleClick2 = (e) => {
     //     let index = e.target.value

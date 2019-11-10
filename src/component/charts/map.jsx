@@ -15,6 +15,7 @@ export default class Map extends Component {
   clickEchartsPie = (e) => {
     if (!dynasty.includes(e.name)) {
       this.props.setCurrent(e.name)
+      console.log('e',e)
     }
   }
 
