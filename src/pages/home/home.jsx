@@ -33,8 +33,26 @@ export default class Home extends React.Component {
   };
 
   componentDidMount() {
+    // let indexedDB =
+    //   window.indexedDB ||
+    //   window.webkitIndexedDB ||
+    //   window.mozIndexedDB ||
+    //   window.msIndexedDB;
+    // if (indexedDB) {
+    //   let db = indexedDB.open('map')
+    // }
 
-    // TODO: 缓存优化，IndexedDB，然后读取并注册地图，减少服务器请求
+    // else {
+    //   Promise.all([reqMapTang(), reqMapSong(), reqMapYuan(), reqMapMing(), reqMapQing()])
+    //     .then((result) => {
+    //       let mapName = ['tang', 'song', 'yuan', 'ming', 'qing']
+    //       result.map((item, index) => {
+    //         console.log(mapName[index], item)
+
+    //         echarts.registerMap(mapName[index], item)  //注册地图
+    //       })
+    //     })
+    // }
     Promise.all([reqMapTang(), reqMapSong(), reqMapYuan(), reqMapMing(), reqMapQing()])
       .then((result) => {
         let mapName = ['tang', 'song', 'yuan', 'ming', 'qing']

@@ -44,7 +44,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3002/CBDB"
+  "proxy": "http://47.97.217.209:8080/CBDB"
 }
 
 

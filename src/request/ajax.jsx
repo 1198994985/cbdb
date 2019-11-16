@@ -2,6 +2,8 @@ import axios from 'axios'
 import { message } from 'antd'
 
 const base = ""
+axios.defaults.withCredentials = true;
+
 function request(url, data = {}, type = 'GET') {
 
   return new Promise((resolve, reject) => {

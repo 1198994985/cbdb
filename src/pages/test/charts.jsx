@@ -63,16 +63,15 @@ export default class Charts extends Component {
   constructor(props) {
 
     super(props)
-
+    // 赶项目，先这么写。。。。，由于存储的是引用，所以不会造成过多的冗余
     this.state = {
-
-      tang: {},
-      song: {},
-      yuan: {},
-      ming: {},
-      qing: {},
+      heatMaptang: {},
+      heatMapSong: {},
+      heatMapYuan: {},
+      heatMapMing: {},
+      heatMapQing: {},
       currentClickProvince: '',
-      tableInfo: ''
+      tableInfo:[],
       // mpName: " ", // 没有必要使用这么多状态
       // mPerson: {},
       // isInput: false,
@@ -87,18 +86,19 @@ export default class Charts extends Component {
   setCurrentClickProvince = (name) => {
     // 输出点击的地名
     const url = getAddressName(name)
-    console.log('name ', url )
+    console.log('name ', url)
     const res = reqAddressName(url)
 
     res.then(response => {
       console.log('response', response)
       let data = []
+      let temp, oneInfo;
       for (let i in response) {
-        let temp = response[i]
-        data.push({ key: temp.id,id:temp.id, firstyear: temp.firstyear, name: temp.chName, lastyear: temp.lastyear, office_name: temp.office_name, office_address: temp.office_address })
+        temp = response[i]
+        oneInfo = { city: temp.city, key: temp.id, id: temp.id, firstyear: temp.firstyear, name: temp.chName, lastyear: temp.lastyear, office_name: temp.office_name, office_address: temp.office_address }
+        data.push(oneInfo)
       }
-      this.setState((prestate ) =>({ ...prestate, currentClickProvince: name, tableInfo: data  }))
-      console.log('s', this.state.tableInfo)
+      this.setState((prestate) => ({ currentClickProvince: name, tableInfo: data}))
     })
   }
 
@@ -121,17 +121,18 @@ export default class Charts extends Component {
   componentDidMount() {
 
     // TODO: 缓存优化，IndexedDB，然后读取并注册热力地图，减少服务器请求
+    // 这里写 并发请求服务器会崩掉 所以,挨个请求
+    let mapName = ['heatMaptang', 'heatMapSong', 'heatMapYuan', 'heatMapMing', 'heatMapQing']
+    reqHeatMapTang().then((res) => {
+      this.setState({ [mapName[0]]: convertData(res) }, rest => {
+        console.log('heatMapTang', this.state.heatMaptang)
+      })
+    })
 
-    // // 这里写的有一点问题
-    // Promise.all([reqHeatMapTang(),reqHeatMapSong(), reqHeatMapYuan(), reqHeatMapMing(), reqHeatMapQing() ]) // 
-    //   .then((result) => {
-    //     let mapName = ['tang', 'song', 'yuan', 'ming', 'qing']
-    //     result.map((item, index) => {
-    //       console.log('map')
-    //       this.setState({ [mapName[index]]: convertData(item) })
-    //     })
-    //   })
-
+    // this.setState({ [mapName[0]]: convertData(reqHeatMapSong()) })
+    // this.setState({ [mapName[0]]: convertData(reqHeatMapYuan()) })
+    // this.setState({ [mapName[0]]: convertData(reqHeatMapMing()) })
+    // this.setState({ [mapName[0]]: convertData(reqHeatMapQing()) })
 
   }
 
@@ -145,7 +146,12 @@ export default class Charts extends Component {
           {/* </Suspense> */}
         </div>
         <div style={{ float: 'left', width: '50%' }}>
-          <AppointmentForm tempState={this.state} handleSetState={this.handleSetState} clickProvince={this.state.currentClickProvince} tableInfo={this.state.tableInfo} />
+          <AppointmentForm tempState={this.state}
+            handleSetState={this.handleSetState}
+            clickProvince={this.state.currentClickProvince}
+            tableInfo={this.state.tableInfo}
+  
+          />
           <OfficialJobForm mpName={this.state.mpName} />
         </div>
         <div>
