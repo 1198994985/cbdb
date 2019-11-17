@@ -1,197 +1,285 @@
 import React, { Component } from 'react'
-import './officialJobForm.css'
-import { Card, Radio } from 'antd'
+import './index.css'
+import { Card, Table, Select, Button } from 'antd'
 import '../card.less'
 
-import { Table, Divider, Tag } from 'antd';
-
 const { Column, ColumnGroup } = Table;
-const data = [
+const { Option } = Select;
+const info = [
     {
-
+        "id": 2727,
+        "chName": "賀澄",
+        "firstyear": "1490",
+        "lastyear": "未詳",
+        "office_name": "典史",
+        "office_address": "蠡縣",
+        "city": "[未詳]",
+        "office_x_coord": 115.5747,
+        "office_y_coord": 38.490063
     },
     {
-
+        "id": 4440,
+        "chName": "林光重",
+        "firstyear": "1490",
+        "lastyear": "未詳",
+        "office_name": "教諭",
+        "office_address": "武義",
+        "city": "[未詳]",
+        "office_x_coord": 119.802269,
+        "office_y_coord": 28.895449
     },
     {
-
+        "id": 5558,
+        "chName": "洪銮",
+        "firstyear": "1490",
+        "lastyear": "未詳",
+        "office_name": "經歷",
+        "office_address": "[未詳]",
+        "city": "[未詳]"
     },
     {
-
+        "id": 7140,
+        "chName": "羅時",
+        "firstyear": "1490",
+        "lastyear": "未詳",
+        "office_name": "同知",
+        "office_address": "溫州府",
+        "city": "[未詳]",
+        "office_x_coord": 120.65322113,
+        "office_y_coord": 28.018291473
     },
     {
-
+        "id": 7468,
+        "chName": "慕容希古",
+        "firstyear": "1490",
+        "lastyear": "未詳",
+        "office_name": "縣丞",
+        "office_address": "稷山",
+        "city": "[未詳]",
+        "office_x_coord": 110.978828,
+        "office_y_coord": 35.602161
     },
-];
+    {
+        "id": 7551,
+        "chName": "任鮑奇",
+        "firstyear": "1490",
+        "lastyear": "未詳",
+        "office_name": "縣丞",
+        "office_address": "零陵",
+        "city": "[未詳]",
+        "office_x_coord": 111.612564,
+        "office_y_coord": 26.210339
+    },
+    {
+        "id": 8786,
+        "chName": "郭荣",
+        "firstyear": "1490",
+        "lastyear": "未詳",
+        "office_name": "縣丞",
+        "office_address": "[未詳]",
+        "city": "[未詳]"
+    },
+    {
+        "id": 10256,
+        "chName": "崔景隆",
+        "firstyear": "1490",
+        "lastyear": "未詳",
+        "office_name": "訓導",
+        "office_address": "[未詳]",
+        "city": "[未詳]"
+    },
+    {
+        "id": 13726,
+        "chName": "吳成",
+        "firstyear": "1490",
+        "lastyear": "未詳",
+        "office_name": "知縣",
+        "office_address": "[未詳]",
+        "city": "[未詳]"
+    },
+    {
+        "id": 14491,
+        "chName": "林釗",
+        "firstyear": "1490",
+        "lastyear": "未詳",
+        "office_name": "知縣",
+        "office_address": "金華",
+        "city": "[未詳]",
+        "office_x_coord": 119.649918,
+        "office_y_coord": 29.104712
+    },
+    {
+        "id": 14594,
+        "chName": "樊軒",
+        "firstyear": "1490",
+        "lastyear": "未詳",
+        "office_name": "知縣",
+        "office_address": "[未詳]",
+        "city": "[未詳]"
+    },
+    {
+        "id": 15231,
+        "chName": "蕭良宜",
+        "firstyear": "1490",
+        "lastyear": "未詳",
+        "office_name": "知縣",
+        "office_address": "[未詳]",
+        "city": "[未詳]"
+    },
+    {
+        "id": 15655,
+        "chName": "關瑜",
+        "firstyear": "1490",
+        "lastyear": "未詳",
+        "office_name": "知縣",
+        "office_address": "寧晉",
+        "city": "[未詳]",
+        "office_x_coord": 114.91539764,
+        "office_y_coord": 37.621086121
+    },
+    {
+        "id": 17698,
+        "chName": "莊珪",
+        "firstyear": "1490",
+        "lastyear": "未詳",
+        "office_name": "主簿",
+        "office_address": "[未詳]",
+        "city": "[未詳]"
+    }
+]
 
 
-export default class OfficialJobForm extends Component {
+export default class AppointmentForm extends React.PureComponent {
 
-    // handleClick2 = (e) => {
-    //     let index = e.target.value
-    //     let name = this.props.mpName
-    //     if (index === 'a') {
-    //         const address = "/person?mpName=" + name + "&dataType=3" //任职信息
+    state = {
+        leftSelectorValue: '0',
+        RightSelectorValue: '0',
+        tableInfoByOffice: {},
+        tableInfoByCit: {},
+        citySelectorList: [],
+        OfficerSelectorList: [],
 
-    //         $.ajax({
-    //             type: "get",
-    //             dataType: "json",//数据格式
-    //             url: address,  //请求地址
+    }
+    /**
+     * 选择器回调函数
+     * @param {string} value 
+     */
+    leftSelectorChange = (value) => {
+        console.log(`selected ${value}`);
+        this.setState({ leftSelectorValue: value })
+    }
 
-    //             success: function (msg) {
+    handleChange = (value) => {
+        console.log(`selected ${value}`);
+        this.setState({ RightSelectorValue: value })
+    }
 
-    //                 if (msg['err'] === 1 || !msg['postPersons']) {
-    //                     console.log("数据库没有该历史人物的任职数据,请重新输入")
-    //                     $("#info1  tr:not(:first)").empty("")
-    //                     $("#head2").html("")
-    //                     $("#head2").html(name + "任职信息")
-    //                     $('#info1 tr:eq(0) th:eq(1)').html("姓名")//更换表头
-    //                     $('#info1 tr:eq(0) th:eq(2)').html("就职地")//更换表头
-    //                     $('#info1 tr:eq(0) th:eq(3)').html("出生地")//更换表头
-    //                     $('#info1 tr:eq(0) th:eq(4)').html("官职名")//更换表头
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.tableInfo !== prevState.tableInfo) {
+            console.log('test')
 
+            let tableInfoByCity = {}
+            let tableInfoByOffice = {}
+            let citySelectorList = []
+            let OfficerSelectorList = []
+            const { tableInfo } = nextProps
+            for (let i in tableInfo) {
+                let temp = tableInfo[i]
+                if (!tableInfoByCity[temp.city]) {
+                    tableInfoByCity[temp.city] = []
+                    citySelectorList.push(temp.city)
+                }
+                if (!tableInfoByOffice[temp.office_name]) {
+                    tableInfoByOffice[temp.office_name] = []
+                    OfficerSelectorList.push(temp.office_name)
+                }
+                tableInfoByCity[temp.city].push(temp)
+                tableInfoByOffice[temp.office_name].push(temp)
+            }
+            OfficerSelectorList = Array.from(new Set(OfficerSelectorList))
+            console.log('five', {
+                tableInfoByOffice,
+                tableInfoByCity,
+                citySelectorList,
+                OfficerSelectorList
+            })
+            return {
+                tableInfoByOffice,
+                tableInfoByCity,
+                citySelectorList,
+                OfficerSelectorList,
+                tableInfo
+            }
+        }
+        return;
+    }
 
-    //                     let tr = '<td>无数据</td>' +
-    //                         '<td>无数据</td>' +
-    //                         '<td>无数据</td>' +
-    //                         '<td>无数据</td>' +
-    //                         '<td>无数据</td>'
-    //                     $("#info1").append('<tr>' + tr + '</tr>')
-    //                 }
+    handleSearch = () => {
 
-    //                 else {
-    //                     $("#info1  tr:not(:first)").empty("")
-    //                     $("#head2").html("")
-    //                     $("#head2").html(name + "任职信息")
-    //                     $('#info1 tr:eq(0) th:eq(1)').html("上任时间")//更换表头
-    //                     $('#info1 tr:eq(0) th:eq(2)').html("调任时间")//更换表头
-    //                     $('#info1 tr:eq(0) th:eq(3)').html("官职名")//更换表头
-    //                     $('#info1 tr:eq(0) th:eq(4)').html("任官地点")//更换表头
-
-    //                     let msg1 = msg['postPersons']
-
-    //                     for (let i = 0; i < msg1.length; i++) {
-    //                         let tr = ""
-    //                         let n = i + 1
-    //                         tr = '<td>' + n + '</td>' +
-    //                             /*'<td>'+msg1[i]['officeId']+'</td>' +*/
-    //                             '<td>' + msg1[i]['firstYear'] + '</td>' +
-    //                             '<td>' + msg1[i]['lastYear'] + '</td>' +
-    //                             '<td>' + msg1[i]['officeName'] + '</td>' +
-    //                             /*'<td  id="m1" href="http://localhost:3000/#/simple-force-chart?name="+name>'+msg1[i]['addressName']+'</td>'*/
-    //                             '<td>' + msg1[i]['addressName'] + '</td>'
-    //                         $("#info1").append('<tr>' + tr + '</tr>')
-    //                     }
-    //                 }
-    //             },
-    //             error: function (msg) {
-    //                 alert('对不起！数据库断开连接handleClick2(e)3.1')
-    //             }
-    //         })
-
-    //     }
-    //     else if (index === 'b') {  //同年信息
-    //         let year = $("#id4").html()
-    //         if (year === '无数据') {
-    //             $("#info1  tr:not(:first)").empty("")
-    //             $("#head2").html("")
-    //             $("#head2").html(name + "同年当官历史人物")
-    //             $('#info1 tr:eq(0) th:eq(1)').html("姓名")//更换表头
-    //             $('#info1 tr:eq(0) th:eq(2)').html("就职地")//更换表头
-    //             $('#info1 tr:eq(0) th:eq(3)').html("出生地")//更换表头
-    //             $('#info1 tr:eq(0) th:eq(4)').html("官职名")//更换表头
-
-
-    //             let tr = '<td>无数据</td>' +
-    //                 '<td>无数据</td>' +
-    //                 '<td>无数据</td>' +
-    //                 '<td>无数据</td>' +
-    //                 '<td>无数据</td>'
-    //             $("#info1").append('<tr>' + tr + '</tr>')
-    //         }
-    //         else {
-    //             let arr = year.split(":")
-    //             let arr1 = arr[1].split("(")
-    //             let address = "/address?firstYear=" + arr1[0]
-
-    //             $.ajax({
-    //                 type: "get",
-    //                 dataType: "json",//数据格式
-    //                 url: address,  //请求地址
-
-    //                 success: function (msg) {
-    //                     $("#info1  tr:not(:first)").empty("")
-    //                     $("#head2").html("")
-    //                     $("#head2").html(name + "同年当官历史人物")
-    //                     $('#info1 tr:eq(0) th:eq(1)').html("姓名")//更换表头
-    //                     $('#info1 tr:eq(0) th:eq(2)').html("就职地")//更换表头
-    //                     $('#info1 tr:eq(0) th:eq(3)').html("出生地")//更换表头
-    //                     $('#info1 tr:eq(0) th:eq(4)').html("官职名")//更换表头
-
-    //                     for (let i = 0; i < msg.length; i++) {
-    //                         let tr = ""
-    //                         let n = i + 1
-
-    //                         tr = '<td>' + n + '</td>' +
-    //                             /*'<td>'+msg1[i]['officeId']+'</td>' +*/
-    //                             '<td>' + msg[i]['chName'] + '</td>' +
-    //                             '<td>' + msg[i]['office_address()'] + '</td>' +
-    //                             '<td>' + msg[i]['city'] + '</td>' +
-    //                             '<td>' + msg[i]['office_name'] + '</td>'
-    //                         $("#info1").append('<tr>' + tr + '</tr>')
-    //                     }
-    //                 },
-    //                 error: function (msg) {
-    //                     alert('对不起！数据库断开连接handleClick2(e)3.2')
-    //                 }
-    //             })
-    //         }
-    //     }
-
-    //     else {
-    //         console.log("handleClick2:error")
-    //     }
-    // }
+    }
     render() {
+        const { ClickYear, tableInfo } = this.props
+        const { citySelectorList, OfficerSelectorList, tableInfoByCity, tableInfoByOffice } = this.state
+        const { leftSelectorValue, RightSelectorValue } = this.state
+        let RightSelector, nowTableInfo
+        if (leftSelectorValue === '1' || leftSelectorValue === '2') {
+            RightSelector = (leftSelectorValue === '1' ? OfficerSelectorList : citySelectorList).map((item, index) => {
+                return <Option value={item} key={item + index}>{item}</Option>
+            })
+        }
+        if (leftSelectorValue === '0' || RightSelectorValue === '0') {
+            nowTableInfo = tableInfo
+        } else if (leftSelectorValue !== '0' && RightSelectorValue !== '0') {
+            nowTableInfo = (leftSelectorValue === '1' ? tableInfoByOffice : tableInfoByCity)[RightSelectorValue]
+        }
+
         return (
             <div className="info-div1">
-                <Card title="官员任职信息表" style={{ height: '400px' }}>
-                    <div>
-                        <div>
-                            <Radio.Group defaultValue="a" buttonStyle="solid" style={{ margin: "8px" }}
-                                onChange={this.handleClick2}>
-                                <Radio.Button value="a">任职信息</Radio.Button>
-                                <Radio.Button value="b">同年信息</Radio.Button>
-                            </Radio.Group>
-                        </div>
+                <Card title={ClickYear.length ? ClickYear + '年 人物任命情况表' : "年份 人物任命情况表"}>
+                    <div className="select-div">
+                        <Select defaultValue="0" onChange={this.leftSelectorChange} >
+                            <Option value="0" disabled>
+                                --就职城市--
+              </Option>
+                            <Option value="1" >
+                                官职名
+              </Option>
+                            <Option value="2" >
+                                就职地
+              </Option>
+                        </Select>
+                        <Select defaultValue="0" onChange={this.handleChange} >
+                            <Option value="0" disabled>
+                                --请选择--
+              </Option>
+                            {
+                                RightSelector
+                            }
+
+                        </Select>
+
+                        <Button type="primary" onClick={this.handleSearch}>筛选</Button>
                     </div>
-                    {/* <h2 id="head2">任职信息</h2> */}
                     <div className="table-div">
-                        {/* <table className="table" id='info1'>
-                            <thead>
-                            <tr>
-                                <th>序号</th>
-                                <th>上任时间</th>
-                                <th>调任时间</th>
-                                <th>官职名</th>
-                                <th>任官地点</th>
-                            </tr>
-                            </thead>
-                        </table> */}
-
-                        <Table dataSource={data}>
-
-
-                            <Column title="序号" dataIndex="age1" key="age1" />
-                            <Column title="上任时间" dataIndex="address2" key="address2" />
-                            <Column title="调任时间" dataIndex="address3" key="address3" />
-                            <Column title="官职名" dataIndex="address4" key="address4" />
-                            <Column title="任官地点" dataIndex="address5" key="address5" />
-
+                        <Table dataSource={nowTableInfo}
+                            pagination={{ defaultCurrent: 1, pageSize: 6, hideOnSinglePage: true, total: nowTableInfo.length }}
+                            rowSelection={{}}
+                        >
+                            <Column title="序号" dataIndex="id" key="id" />
+                            <Column title="姓名" dataIndex="chName" key="name" />
+                            <Column title="city" dataIndex="city" key="city" />
+                            <Column title="官职名" dataIndex="office_name" key="office_name" />
+                            <Column title="就职地" dataIndex="office_address" key="office_address" />
+                            <Column title="始年" dataIndex="firstyear" key="firstyear" />
+                            <Column title="终年" dataIndex="lastyear" key="lastyear" />
                         </Table>
                     </div>
+
                 </Card>
             </div>
         )
     }
 }
+
+
+

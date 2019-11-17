@@ -3,14 +3,11 @@ import ReactEcharts from "echarts-for-react";
 import echarts from 'echarts/lib/echarts';
 import { Card } from 'antd';
 import '../card.less'
-import theMap from '../../config/mapConfig'
+import {getMapOption} from '../../config/mapConfig'
 
 const dynasty = ['唐', '宋', '元', '明', '清']
 
-export default class Map extends Component {
-  constructor(props) {
-    super()
-  }
+export default class Map extends React.PureComponent {
 
   clickEchartsPie = (e) => {
     if (!dynasty.includes(e.name)) {
@@ -24,12 +21,15 @@ export default class Map extends Component {
   }
 
   render() {
+    const { heatMapInfo } = this.props
+    const mapOption = getMapOption(heatMapInfo)
+    console.log('mapOption', mapOption)
     return (
       <div>
         <Card title='地图' bordered={false} style={{ width: '100%' }} >
           <ReactEcharts
             echarts={echarts}
-            option={theMap}
+            option={mapOption}
             onEvents={this.onclick}
           />
         </Card>

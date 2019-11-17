@@ -92,7 +92,7 @@ export default class AppointmentForm extends React.PureComponent {
 
     return (
       <div className="info-div1">
-        <Card title={clickProvince.length ? clickProvince + ' 人物任命情况表' : "五朝历史人物任命情况表"}>
+        <Card title={clickProvince.length ? clickProvince + ' 人物任命情况表' : "地方 人物任命情况表"}>
           <div className="select-div">
             <Select defaultValue="0" onChange={this.leftSelectorChange} >
               <Option value="0" disabled>
@@ -119,7 +119,7 @@ export default class AppointmentForm extends React.PureComponent {
           </div>
           <div className="table-div">
             <Table dataSource={nowTableInfo}
-              pagination={{ defaultCurrent: 1, pageSize: 6, hideOnSinglePage: true, total: tableInfo.length }}
+              pagination={{ defaultCurrent: 1, pageSize: 6, hideOnSinglePage: true, total: nowTableInfo.length }}
               rowSelection={{}}
             >
               <Column title="序号" dataIndex="id" key="id" />

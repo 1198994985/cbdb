@@ -58,7 +58,10 @@ export default class Home extends React.Component {
         let mapName = ['tang', 'song', 'yuan', 'ming', 'qing']
         result.map((item, index) => {
           console.log(mapName[index], item)
-
+          // if (index === 0) {
+          //   delete item['crs']
+          //   console.log("itemTang",item)
+          // }
           echarts.registerMap(mapName[index], item)  //注册地图
         })
       })

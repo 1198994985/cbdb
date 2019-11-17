@@ -16,7 +16,8 @@ export default class Map extends React.PureComponent {
   }
 
   clickEchartsPie = (e) => {
-      console.log('e', e)
+    console.log('e', e)
+    this.props.setCurrentClickYear(e.name)
   }
 
   onclick = {

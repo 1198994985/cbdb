@@ -38,7 +38,7 @@ export const reqHeatMapQing = () => request(base + '/map?dynasty_flag=5', {}, 'G
 
 
 // 获取地图json数据
-export const reqMapTang = () => request('tang1.geojson', {}, 'GET')
+export const reqMapTang = () => request('Tang.geojson', {}, 'GET')
 export const reqMapSong = () => request('Song.geojson', {}, 'GET')
 export const reqMapYuan = () => request('Yuan.geojson', {}, 'GET')
 export const reqMapMing = () => request('Ming.geojson', {}, 'GET')
@@ -46,3 +46,5 @@ export const reqMapQing = () => request('Qing.geojson', {}, 'GET')
 
 // 请求地图省份对应的任务信息
 export const reqAddressName = (address) => request(base + address, {}, 'GET') // /address?addressName_XXX=
+
+export const reqAddressYear = (year) => request(base + '/address?firstYear='+year, {}, 'GET') // 

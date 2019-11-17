@@ -9,11 +9,11 @@ import {
   reqHeatMapYuan,
   reqHeatMapMing,
   reqHeatMapQing,
-  reqAddressName
+  reqAddressName,
+  reqAddressYear
 } from '../../request/ajax'
 import PeopleRelationship from "../../component/PR/PeopleRelationship";
 import province from '../../config/dynastyProvince.jsx'
-
 // const Map = lazy( () => import('../../component/charts/map') )
 
 // 一切烂代码都不是fb写的，fb最强
@@ -63,23 +63,12 @@ export default class Charts extends Component {
   constructor(props) {
 
     super(props)
-    // 赶项目，先这么写。。。。，由于存储的是引用，所以不会造成过多的冗余
     this.state = {
-      heatMaptang: {},
-      heatMapSong: {},
-      heatMapYuan: {},
-      heatMapMing: {},
-      heatMapQing: {},
       currentClickProvince: '',
-      tableInfo:[],
-      // mpName: " ", // 没有必要使用这么多状态
-      // mPerson: {},
-      // isInput: false,
-      // isLoaded: false,
-      // isradio: 1,
-      // maxRelationValue: 6,
-      // relationValue: 5,
-      // isChanged: false
+      currentClickYear:'',
+      addressTableInfo: [],
+      yearTableInfo: [],
+      heatMapInfo:[[],[],[],[],[]]
     }
   }
 
@@ -88,6 +77,7 @@ export default class Charts extends Component {
     const url = getAddressName(name)
     console.log('name ', url)
     const res = reqAddressName(url)
+    this.setState(() => ({ currentClickProvince: name}))
 
     res.then(response => {
       console.log('response', response)
@@ -98,41 +88,43 @@ export default class Charts extends Component {
         oneInfo = { city: temp.city, key: temp.id, id: temp.id, firstyear: temp.firstyear, name: temp.chName, lastyear: temp.lastyear, office_name: temp.office_name, office_address: temp.office_address }
         data.push(oneInfo)
       }
-      this.setState((prestate) => ({ currentClickProvince: name, tableInfo: data}))
+      this.setState(() => ({ addressTableInfo: data}))
+    })
+  }
+  setCurrentClickYear = (year) => {
+    console.log('clickYear', year)
+    const theYear = year.replace(/[^0-9]/ig, "")
+    const res = reqAddressYear(theYear)
+    this.setState({ currentClickYear: theYear,})
+
+    res.then(response => {
+      console.log('yearResponse', response)
+      let data = []
+      let temp, oneInfo;
+      for (let i in response) {
+        temp = response[i]
+        oneInfo = { city: temp.city, key: temp.id, id: temp.id, firstyear: temp.firstyear, chName: temp.chName, lastyear: temp.lastyear, office_name: temp.office_name, office_address: temp.office_address }
+        data.push(oneInfo)
+      }
+      this.setState(() => ({ yearTableInfo: data }))
     })
   }
 
-
-  // handleSetState = (tempState)=>{
-  //   let {mpName,mPerson,isInput,isLoaded,isradio,maxRelationValue,relationValue,isChanged}=tempState
-  //   this.setState({
-  //     mpName: mpName,
-  //     mPerson: mPerson,
-  //     isInput: isInput,
-  //     isLoaded: isLoaded,
-  //     isradio: isradio,
-  //     maxRelationValue: maxRelationValue,
-  //     relationValue: relationValue,
-  //     isChanged: isChanged
-  //   })
-  // }
-
-
   componentDidMount() {
+    let heatMapInfo = new Array(5);
 
     // TODO: 缓存优化，IndexedDB，然后读取并注册热力地图，减少服务器请求
     // 这里写 并发请求服务器会崩掉 所以,挨个请求
-    let mapName = ['heatMaptang', 'heatMapSong', 'heatMapYuan', 'heatMapMing', 'heatMapQing']
-    reqHeatMapTang().then((res) => {
-      this.setState({ [mapName[0]]: convertData(res) }, rest => {
-        console.log('heatMapTang', this.state.heatMaptang)
-      })
-    })
-
-    // this.setState({ [mapName[0]]: convertData(reqHeatMapSong()) })
-    // this.setState({ [mapName[0]]: convertData(reqHeatMapYuan()) })
-    // this.setState({ [mapName[0]]: convertData(reqHeatMapMing()) })
-    // this.setState({ [mapName[0]]: convertData(reqHeatMapQing()) })
+    (async () => {
+      console.log('heatMapInfo', heatMapInfo)
+      // heatMapInfo[0] = convertData(await reqHeatMapTang())
+      heatMapInfo[1] = convertData(await reqHeatMapSong())
+      // heatMapInfo[2] = convertData(await reqHeatMapYuan())
+      // heatMapInfo[3] = convertData(await reqHeatMapMing())
+      // heatMapInfo[4] = convertData(await reqHeatMapQing())
+      console.log('heatMapInfo', heatMapInfo)
+      this.setState({ heatMapInfo})
+    })();
 
   }
 
@@ -140,19 +132,25 @@ export default class Charts extends Component {
     return (
       <React.Fragment>
         <div style={{ float: 'left', overflow: 'hidden', width: '50% ' }}>
-          <Line />
+            
+          <Line setCurrentClickYear={this.setCurrentClickYear}/>
           {/* <Suspense fallback={'loading'} > */}
-          <Map setCurrent={this.setCurrentClickProvince} />
+          <Map setCurrent={this.setCurrentClickProvince} heatMapInfo={this.state.heatMapInfo} />
           {/* </Suspense> */}
         </div>
         <div style={{ float: 'left', width: '50%' }}>
-          <AppointmentForm tempState={this.state}
-            handleSetState={this.handleSetState}
+          <AppointmentForm 
             clickProvince={this.state.currentClickProvince}
-            tableInfo={this.state.tableInfo}
+            tableInfo={this.state.addressTableInfo}
   
           />
-          <OfficialJobForm mpName={this.state.mpName} />
+          {/* <OfficialJobForm
+            mpName={this.state.mpName} 
+            /> */}
+          <OfficialJobForm 
+            ClickYear={this.state.currentClickYear}
+            tableInfo={this.state.yearTableInfo}
+          />
         </div>
         <div>
           {/* <PeopleRelationship /> */}
