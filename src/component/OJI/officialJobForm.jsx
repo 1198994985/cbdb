@@ -262,7 +262,7 @@ export default class AppointmentForm extends React.PureComponent {
                     </div>
                     <div className="table-div">
                         <Table dataSource={nowTableInfo}
-                            pagination={{ defaultCurrent: 1, pageSize: 6, hideOnSinglePage: true, total: nowTableInfo.length }}
+                            pagination={{ defaultCurrent: 1, pageSize: 6, hideOnSinglePage: true, total: nowTableInfo ? nowTableInfo.length:1 }}
                             rowSelection={{}}
                         >
                             <Column title="序号" dataIndex="id" key="id" />

@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import './PeopleRelationship.css'
+import './PeopleRelationship.less'
 import axios from 'axios'
 import $ from "jquery"
 
 import { Row, Col, Card, Radio, Button, Slider, Input, Icon, Tooltip, Table } from 'antd'
-import D3SimpleForceChart from '../D3SimpleChart/D3SimpleChart'
-
+import D3SimpleForceChart from '../D3SimpleChart/D3SimpleChart.js'
 const RadioGroup = Radio.Group
 
 export default class PeopleRelationship extends Component {
@@ -463,8 +462,7 @@ export default class PeopleRelationship extends Component {
       //初始化界面
       return (
         <div className="bar1">
-          <Row>
-            <Col span={6} offset={8}>
+             <div className="inputDiv">
               <Input
                 placeholder="请输入实体名称"
                 prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -477,11 +475,10 @@ export default class PeopleRelationship extends Component {
                 onChange={this.handleInputChange}
                 onKeyPress={this.handleKeyPress}
               />
-            </Col>
-            <Col span={2}>
+             </div>
+            <div className="searchDiv">
               <Button type="primary" onClick={this.handleClick}>搜索</Button>
-            </Col>
-          </Row>
+            </div>
         </div>
       )
     } else {
@@ -1513,125 +1510,128 @@ export default class PeopleRelationship extends Component {
 
         return (
           <div>
-            <Row gutter={10}>
-              <Col md={24}>
+            <div>
+              <div>
                 <div className="bar1">
-                  <Row>
-                    <Col span={6} offset={8}>
+                    <div className="showinputDiv">
                       <Input
                         placeholder="请输入实体名"
-                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        prefix={<Icon
+                            style={{position:"absolute",left:1}}
+                            type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                         suffix={
                           <Tooltip title="请输入繁体字">
-                            <Icon type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
+                            <Icon
+                                style={{position:"absolute",right:1}}
+                                type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
                           </Tooltip>
                         }
 
                         onChange={this.handleInputChange}
                         onKeyPress={this.handleKeyPress}
                       />
-                    </Col>
-                    <Col span={2}>
                       <Button type="primary" onClick={this.handleClick}>搜索</Button>
-                    </Col>
-                  </Row>
+                    </div>
                 </div>
-                <div>
+                <div className="infoAll">
                   <div className="gutter-box-timeline">
                     <Card title="CBDB人物关系网络" bordered={false}
-                      style={{ height: '800px', width: '100%' }}>
-                      <Row>
-                        <Col span={10}>
+                      style={{ height: '1000px', width: '100%' }}>
+                      <div className="relationDiv">
+                        <div className="chosenDiv">
                           <RadioGroup onChange={this.getRelation} value={this.state.isRadio}>
                             <Radio value={1}>社交关系</Radio>
                             <Radio value={2}>亲属关系</Radio>
                             <Radio value={3}>所有关系</Radio>
                           </RadioGroup>
-                        </Col>
-                        <Col span={2} className="slider-text">关系值:</Col>
-                        <Col span={10}>
+                        </div>
+                        <div  className="slider-text">关系值:</div>
+                        <div className="sliderDiv">
                           <Slider range min={0} max={this.state.maxRelationValue}
                             onChange={this.handleChange}
                             marks={this.state.marks}
                             step={null}
                             defaultValue={this.state.relationValue}
                             style={{ margin: 5 }} />
-                        </Col>
-                      </Row>
-                      {/* <D3SimpleForceChart types={types} dataTree={dataTree}
-                                                        nameHandler={this.nameHandler.bind(this)}/> */}
+                        </div>
+                      </div>
+                      <D3SimpleForceChart types={types} dataTree={dataTree}
+                                                        nameHandler={this.nameHandler.bind(this)}/>
+                      <div className="D3chart">
+                      </div>
+                      <div className="info-div">
+                        <div>
+                          <Card title="官员生平信息表" style={{ height: '350px' }}>
+                            <div className="table-basic-div">
+                              <table>
+                                <thead>
+                                <tr>
+                                  <th>属性</th>
+                                  <th>属性值</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                  <td>姓名</td>
+                                  <td>{mpName}</td>
+                                </tr>
+                                <tr>
+                                  <td>别号</td>
+                                  <td>{basicInfo.aliasName}</td>
+                                </tr>
+                                <tr>
+                                  <td>朝代</td>
+                                  <td>{basicInfo.dynasty}</td>
+                                </tr>
+                                <tr>
+                                  <td>生年</td>
+                                  <td>{basicInfo.yearBirth}</td>
+                                </tr>
+                                <tr>
+                                  <td>卒年</td>
+                                  <td>{basicInfo.yearDeath}</td>
+                                </tr>
+                                <tr>
+                                  <td>籍贯</td>
+                                  <td>{basicInfo.addrName}</td>
+                                </tr>
+                                <tr>
+                                  <td>入仕途径</td>
+                                  <td>{basicInfo.ruShiDoor}</td>
+                                </tr>
+                                <tr>
+                                  <td>入仕类别</td>
+                                  <td>{basicInfo.ruShiType}</td>
+                                </tr>
+                                <tr>
+                                  <td>入仕时间</td>
+                                  <td>{basicInfo.ruShiYear}</td>
+                                </tr>
+                                <tr>
+                                  <td>社会地位</td>
+                                  <td>{basicInfo.statusName}</td>
+                                </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </Card>
+                        </div>
+
+                        <div>
+                          <Card title="官员任职信息表" style={{ height: '450px' }}>
+                            <div className="table-post-div">
+                              <Table columns={columns} dataSource={postPersons} />
+                            </div>
+                          </Card>
+                        </div>
+                      </div>
                     </Card>
                   </div>
 
-                  <div className="info-div">
-                    <div>
-                      <Card title="官员生平信息表" style={{ height: '350px' }}>
-                        <div className="table-basic-div">
-                          <table>
-                            <thead>
-                              <tr>
-                                <th>属性</th>
-                                <th>属性值</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>姓名</td>
-                                <td>{mpName}</td>
-                              </tr>
-                              <tr>
-                                <td>别号</td>
-                                <td>{basicInfo.aliasName}</td>
-                              </tr>
-                              <tr>
-                                <td>朝代</td>
-                                <td>{basicInfo.dynasty}</td>
-                              </tr>
-                              <tr>
-                                <td>生年</td>
-                                <td>{basicInfo.yearBirth}</td>
-                              </tr>
-                              <tr>
-                                <td>卒年</td>
-                                <td>{basicInfo.yearDeath}</td>
-                              </tr>
-                              <tr>
-                                <td>籍贯</td>
-                                <td>{basicInfo.addrName}</td>
-                              </tr>
-                              <tr>
-                                <td>入仕途径</td>
-                                <td>{basicInfo.ruShiDoor}</td>
-                              </tr>
-                              <tr>
-                                <td>入仕类别</td>
-                                <td>{basicInfo.ruShiType}</td>
-                              </tr>
-                              <tr>
-                                <td>入仕时间</td>
-                                <td>{basicInfo.ruShiYear}</td>
-                              </tr>
-                              <tr>
-                                <td>社会地位</td>
-                                <td>{basicInfo.statusName}</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </Card>
-                    </div>
 
-                    <div>
-                      <Card title="官员任职信息表" style={{ height: '450px' }}>
-                        <div className="table-post-div">
-                          <Table columns={columns} dataSource={postPersons} />
-                        </div>
-                      </Card>
-                    </div>
-                  </div>
                 </div>
-              </Col>
-            </Row>
+              </div>
+            </div>
           </div>
         )
       }
